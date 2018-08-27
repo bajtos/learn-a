@@ -4,15 +4,12 @@ This is a "bare minimum" repo that shows one way to configure TypeScript Project
 
 # Setting up this repo
 
+```sh
+git clone https://github.com/raymondfeng/learn-a.git
+cd learn-a
+npm install
+npm run build
 ```
-> git clone https://github.com/RyanCavanaugh/learn-a.git
-> cd learn-a
-> npm install
-> lerna bootstrap
-> tsc -b packages
-```
-
-Note that you'll need a 3.0 version of `tsc` (currently available at `npm install -g typescript@next`).
 
 ### General Structure
 
@@ -25,10 +22,16 @@ packages/
 | pkg1/
   | tsconfig.json
   | src/
+  | | (typescript files)   
+  | test/
   | | (typescript files)        
-  | lib/
-  | | (javascript files)
-  | | (.d.ts files)
+  | dist/
+  | | src/
+  |   | (javascript files)
+  |   | (.d.ts files)
+  | | test/
+  |   | (javascript files)
+  |   | (.d.ts files)
 | pkg2/
   | (same as pkg1)
 | pkg3/
@@ -78,8 +81,8 @@ We'll just cover one of the `pkg1` / `pkg2` / `pkg3` packages since they're basi
 {
   "extends": "../tsconfig.settings.json",
   "compilerOptions": {
-    "outDir": "lib",
-    "rootDir": "src"
+    "outDir": "dist",
+    "rootDir": "."
   },
   "references": [
     { "path": "../pkg1" }
@@ -106,26 +109,26 @@ Nothing unusual going on here. We import and export with the usual syntax. Notab
 Here are the relevant excerpts from the `package.json`:
 ```json
 {
-  "main": "lib/index.js",
-  "typings": "lib/index.d.ts",
+  "main": "dist/src/index.js",
+  "typings": "dist/src/index.d.ts",
   "scripts": {
     "prepublishOnly": "tsc -b ."
   },
   "devDependencies": {
-    "typescript": "^3.0.0-dev.20180626"
+    "typescript": "^3.0.1"
   }
 }
 ```
 
-Because we build to `lib`, we need to set `main` to the `.js` file there *and* `typings` to the `.d.ts` file.
+Because we build to `dist`, we need to set `main` to the `.js` file there *and* `typings` to the `.d.ts` file.
 
-In `scripts`, we use the local copy of `tsc` (listed here as a dev dependency) to run a *build mode* compilation on the project. This will ensure that the `lib` folder is always built before `npm publish`, and blocks any publishes that try to push non-compiling code.
+In `scripts`, we use the local copy of `tsc` (listed here as a dev dependency) to run a *build mode* compilation on the project. This will ensure that the `dist` folder is always built before `npm publish`, and blocks any publishes that try to push non-compiling code.
 
 #### `packages/pkg2/.npmignore` / `packages/pkg2/.gitignore`
 
 *.gitignore*
 ```
-lib/
+dist/
 ```
 
 *.npmignore*
@@ -133,7 +136,7 @@ lib/
 # Empty, but needs to exist
 ```
 
-The `.gitignore` stops us from checking in build outputs, which is generally a good idea. By default, `npm` won't publish files that are ignored by `git`, so we need a separate `.npmignore` file so that the `lib` folder still gets published!
+The `.gitignore` stops us from checking in build outputs, which is generally a good idea. By default, `npm` won't publish files that are ignored by `git`, so we need a separate `.npmignore` file so that the `dist` folder still gets published!
 
 # Workflow
 
@@ -141,9 +144,9 @@ All your lerna commands and workflow will work as expected here.
 
 To build the TypeScript projects, you can run individual builds with `tsc -b`:
 ```
- > tsc -b packages/pkg3
+npx tsc -b packages/pkg3
 ```
 Or just build everything:
 ```
- > tsc -b packages
+npx tsc -b packages
 ```
