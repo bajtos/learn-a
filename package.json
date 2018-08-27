@@ -1,6 +1,10 @@
 {
-	"devDependencies": {
-		"lerna": "^2.11.0",
-		"typescript": "^3.0.0-dev.20180626"
-	}
+  "devDependencies": {
+    "lerna": "^2.11.0",
+    "typescript": "^3.0.1"
+  },
+  "scripts": {
+    "postinstall": "lerna bootstrap",
+    "build": "tsc -b packages"
+  }
 }

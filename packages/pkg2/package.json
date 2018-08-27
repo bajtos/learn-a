@@ -2,8 +2,8 @@
   "name": "@ryancavanaugh/pkg2",
   "version": "3.0.2",
   "description": "",
-  "main": "lib/index.js",
-  "typings": "lib/index.d.ts",
+  "main": "dist/src/index.js",
+  "typings": "dist/src/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublishOnly": "tsc -b ."
@@ -15,6 +15,6 @@
     "@ryancavanaugh/pkg1": "^3.0.2"
   },
   "devDependencies": {
-    "typescript": "^3.0.0-dev.20180626"
+    "typescript": "^3.0.1"
   }
 }
