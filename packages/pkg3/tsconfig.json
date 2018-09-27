@@ -2,9 +2,9 @@
   "extends": "../tsconfig.settings.json",
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": ".",
-    "include": ["src", "test"]
+    "rootDir": "."
   },
+  "include": ["src", "test"],
   "references": [
     { "path": "../pkg1" },
     { "path": "../pkg2" }
