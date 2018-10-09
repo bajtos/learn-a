@@ -1,3 +1,8 @@
-import {fn4} from '../src';
+import {fn4} from '..';
 
-fn4();
+describe('pkg4', () => {
+
+  it('works', () => {
+    fn4();
+  });
+});

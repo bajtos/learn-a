@@ -5,6 +5,14 @@
   },
   "scripts": {
     "postinstall": "lerna bootstrap",
-    "build": "tsc -b packages"
+    "build": "tsc -b .",
+    "watch": "tsc -b -w .",
+    "pretest": "npm run build",
+    "test": "npm run mocha",
+    "mocha": "mocha packages/*/dist-test"
+  },
+  "dependencies": {
+    "@types/mocha": "^5.2.5",
+    "mocha": "^5.2.0"
   }
 }

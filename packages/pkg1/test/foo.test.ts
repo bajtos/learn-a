@@ -1,3 +1,11 @@
-import {fn} from '../src';
+import {fn} from '..';
 
-fn();
+describe('pkg1', () => {
+  it('works', () => {
+    fn();
+  });
+
+  it('fails', () => {
+    throw new Error('expected test failure');
+  });
+})

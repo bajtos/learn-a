@@ -8,7 +8,7 @@ This is a "bare minimum" repo that shows one way to configure TypeScript Project
 git clone https://github.com/raymondfeng/learn-a.git
 cd learn-a
 npm install
-npm run build
+npm test
 ```
 
 ### General Structure
@@ -16,22 +16,22 @@ npm run build
 As with a normal lerna repo, there's a `packages` folder. Inside we have three creatively named packages `pkg1`, `pkg2`, and `pkg3`.
 
 ```
+tsconfig.settings.json
+tsconfig.json
 packages/
-| tsconfig.settings.json
-| tsconfig.json
 | pkg1/
-  | tsconfig.json
   | src/
-  | | (typescript files)   
+  | | tsconfig.json
+  | | (typescript files)
   | test/
-  | | (typescript files)        
+  | | tsconfig.json
+  | | (typescript files)
   | dist/
-  | | src/
-  |   | (javascript files)
-  |   | (.d.ts files)
-  | | test/
-  |   | (javascript files)
-  |   | (.d.ts files)
+  | | (javascript files)
+  | | (.d.ts files)
+  | dist-test/
+  | | (javascript files)
+  | | (.d.ts files)
 | pkg2/
   | (same as pkg1)
 | pkg3/
@@ -50,7 +50,7 @@ Let's review each file in the repo and explain what's going on
         "declarationMap": true,
         "sourceMap": true,
 
-        // These settings are totally up to you        
+        // These settings are totally up to you
         "esModuleInterop": true,
         "target": "es5",
         "module": "commonjs",
@@ -65,9 +65,11 @@ This file contains the "default" settings that all packages will use for compila
 {
     "files": [],
     "references": [
-        { "path": "pkg1" },
-        { "path": "pkg2" },
-        { "path": "pkg3" }
+        { "path": "packages/pkg1/src" },
+        { "path": "packages/pkg1/test" },
+        { "path": "packages/pkg2/src" },
+        { "path": "packages/pkg2/test" },
+        { "path": "packages/pkg3/src" }
     ]
 }
 ```
@@ -76,22 +78,22 @@ You should also include `"files": []` in this file - this will prevent an incorr
 
 #### `packages/pkg2/tsconfig.json`
 
-We'll just cover one of the `pkg1` / `pkg2` / `pkg3` packages since they're basically identical for the purposes of this demo. Here's `pkg2`'s `tsconfig.json`:
+We'll just cover one of the `pkg1` / `pkg2` / `pkg3` packages since they're basically identical for the purposes of this demo. Here's `pkg2`'s `src/tsconfig.json`:
 ```json
 {
-  "extends": "../tsconfig.settings.json",
+  "extends": "../../../tsconfig.settings.json",
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "."
   },
   "references": [
-    { "path": "../pkg1" }
+    { "path": "../../pkg1/src" }
   ]
 }
 ```
 The `extends` property pulls in the settings we wrote in `tsconfig.settings.json`, so we don't have to duplicate any settings described there.
 
-In `compilerOptions`, we've set `outDir` to `lib` and `rootDir` to `src`, then placed all my `.ts` files in `src`. This means `src/index.ts` will build to `lib/index.js` and `lib/index.d.ts`. This is also the place where you could override settings like `strict` or `target` if you needed to change them on a per-project basis.
+In `compilerOptions`, we've set `outDir` to `dist` and `rootDir` to `.`, then placed all my `.ts` files in `src`. This means `src/index.ts` will build to `dist/index.js` and `dist/index.d.ts`. This is also the place where you could override settings like `strict` or `target` if you needed to change them on a per-project basis.
 
 In the `references` array, we list the paths to the other projects' `tsconfig.json` files (or containing folders, as shown here). This will both ensure that we locate the `.d.ts` files correctly, and set up a proper build ordering.
 
@@ -129,6 +131,7 @@ In `scripts`, we use the local copy of `tsc` (listed here as a dev dependency) t
 *.gitignore*
 ```
 dist/
+dist-test/
 ```
 
 *.npmignore*

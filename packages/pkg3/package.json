@@ -2,8 +2,8 @@
   "name": "@ryancavanaugh/pkg3",
   "version": "3.0.2",
   "description": "",
-  "main": "dist/src/index.js",
-  "typings": "dist/src/index.d.ts",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublishOnly": "tsc -b ."
