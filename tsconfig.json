@@ -1,10 +1,8 @@
 {
   "files": [],
   "references": [
-    { "path": "packages/pkg1/src" },
-    { "path": "packages/pkg1/test" },
-    { "path": "packages/pkg2/src" },
-    { "path": "packages/pkg2/test" },
-    { "path": "packages/pkg3/src" }
+    { "path": "packages/pkg1/tsconfig.json" },
+    { "path": "packages/pkg2/tsconfig.json" },
+    { "path": "packages/pkg3/tsconfig.json" }
   ]
 }

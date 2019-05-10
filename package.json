@@ -9,7 +9,7 @@
     "watch": "tsc -b -w .",
     "pretest": "npm run build",
     "test": "npm run mocha",
-    "mocha": "mocha packages/*/dist-test"
+    "mocha": "mocha packages/*/src/__test__"
   },
   "dependencies": {
     "@types/mocha": "^5.2.5",
