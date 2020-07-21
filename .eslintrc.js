@@ -12,7 +12,16 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
   ],
   parserOptions: {
-    project: projects,
+    project: [
+      './jsconfig.json',
+      ...projects
+    ],
     tsconfigRootDir: __dirname,
+  },
+  env: {
+    node: true,
+  },
+  rules: {
+    '@typescript-eslint/no-var-requires': 'off',
   },
 };

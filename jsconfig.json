@@ -1,0 +1,10 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "allowJs": true,
+    "noEmit": true
+  },
+  "files": [
+    ".eslintrc.js"
+  ]
+}

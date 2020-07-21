@@ -14,7 +14,7 @@
     "test": "npm run mocha",
     "mocha": "mocha packages/*/src/__test__",
     "posttest": "npm run lint",
-    "lint": "eslint . --ext ts"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@types/mocha": "^5.2.5",
