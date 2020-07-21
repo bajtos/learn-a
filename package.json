@@ -1,5 +1,8 @@
 {
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^3.7.0",
+    "@typescript-eslint/parser": "^3.7.0",
+    "eslint": "^7.5.0",
     "lerna": "^3.22.1",
     "typescript": "^3.9.7"
   },
@@ -9,7 +12,9 @@
     "watch": "tsc -b -w .",
     "pretest": "npm run build",
     "test": "npm run mocha",
-    "mocha": "mocha packages/*/src/__test__"
+    "mocha": "mocha packages/*/src/__test__",
+    "posttest": "npm run lint",
+    "lint": "eslint . --ext ts"
   },
   "dependencies": {
     "@types/mocha": "^5.2.5",
