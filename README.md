@@ -21,15 +21,9 @@ tsconfig.json
 packages/
 | pkg1/
   | src/
-  | | tsconfig.json
   | | (typescript files)
-  | test/
-  | | tsconfig.json
-  | | (typescript files)
+  | tsconfig.json
   | dist/
-  | | (javascript files)
-  | | (.d.ts files)
-  | dist-test/
   | | (javascript files)
   | | (.d.ts files)
 | pkg2/
@@ -65,11 +59,9 @@ This file contains the "default" settings that all packages will use for compila
 {
     "files": [],
     "references": [
-        { "path": "packages/pkg1/src" },
-        { "path": "packages/pkg1/test" },
-        { "path": "packages/pkg2/src" },
-        { "path": "packages/pkg2/test" },
-        { "path": "packages/pkg3/src" }
+        { "path": "packages/pkg1/tsconfig.json" },
+        { "path": "packages/pkg2/tsconfig.json" },
+        { "path": "packages/pkg3/tsconfig.json" }
     ]
 }
 ```
@@ -83,17 +75,18 @@ We'll just cover one of the `pkg1` / `pkg2` / `pkg3` packages since they're basi
 {
   "extends": "../../../tsconfig.settings.json",
   "compilerOptions": {
+    "composite": true,
+    "rootDir": "src",
     "outDir": "dist",
-    "rootDir": "."
   },
   "references": [
-    { "path": "../../pkg1/src" }
+    { "path": "../../pkg1/tsconfig.json" }
   ]
 }
 ```
 The `extends` property pulls in the settings we wrote in `tsconfig.settings.json`, so we don't have to duplicate any settings described there.
 
-In `compilerOptions`, we've set `outDir` to `dist` and `rootDir` to `.`, then placed all my `.ts` files in `src`. This means `src/index.ts` will build to `dist/index.js` and `dist/index.d.ts`. This is also the place where you could override settings like `strict` or `target` if you needed to change them on a per-project basis.
+In `compilerOptions`, we've set `outDir` to `dist` and `rootDir` to `src`, then placed all my `.ts` files in `src`. This means `src/index.ts` will build to `dist/index.js` and `dist/index.d.ts`. This is also the place where you could override settings like `strict` or `target` if you needed to change them on a per-project basis.
 
 In the `references` array, we list the paths to the other projects' `tsconfig.json` files (or containing folders, as shown here). This will both ensure that we locate the `.d.ts` files correctly, and set up a proper build ordering.
 
@@ -131,7 +124,6 @@ In `scripts`, we use the local copy of `tsc` (listed here as a dev dependency) t
 *.gitignore*
 ```
 dist/
-dist-test/
 ```
 
 *.npmignore*
