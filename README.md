@@ -2,7 +2,7 @@
 
 This is a "bare minimum" repo that shows one way to configure TypeScript Project References with lerna. There are a lot of different ways you can set things up and this isn't intended to be authoratitive guidance or exclusionary of other ways that might work better in your project.
 
-# Setting up this repo
+## Setting up this repo
 
 ```sh
 git clone https://github.com/raymondfeng/learn-a.git
@@ -133,7 +133,7 @@ dist/
 
 The `.gitignore` stops us from checking in build outputs, which is generally a good idea. By default, `npm` won't publish files that are ignored by `git`, so we need a separate `.npmignore` file so that the `dist` folder still gets published!
 
-# Workflow
+## Workflow
 
 All your lerna commands and workflow will work as expected here.
 
@@ -145,3 +145,20 @@ Or just build everything:
 ```
 npx tsc -b packages
 ```
+
+## Eslint setup
+
+Linting is configuring using the standard setup described in
+[Getting Started - Linting your TypeScript Codebase](https://github.com/typescript-eslint/typescript-eslint/blob/30fafb09422b3aca881f4785d89b0536092d4952/docs/getting-started/linting/README.md).
+
+Additionally, there is `jsconfig.json` project to allow linting of
+ `.eslintrc.js` (and potentially other monorepo-root-level config files).
+
+ Ideally, I would prefer to include `.eslintrc.js` in `files` section of
+ the monorepo-root `tsconfig.json`. Unfortunately, that's not possible:
+ - The setup for `.eslintrc.js` requires compiler option `noEmit: true`
+ - Project references do not support `noEmit: true` mode
+
+Using a different tsconfig file (`jsonconfig.json`) for top-level javascript files
+works around this problem and also allows us to configure different compiler
+options for JavaScript files.
