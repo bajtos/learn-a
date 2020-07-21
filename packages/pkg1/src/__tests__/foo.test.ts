@@ -5,7 +5,7 @@ describe('pkg1', () => {
     fn();
   });
 
-  it('fails', () => {
+  it.skip('fails', () => {
     throw new Error('expected test failure');
   });
 })
